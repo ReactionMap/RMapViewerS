@@ -1,0 +1,225 @@
+T
+T1
+DD
+DS
+D1
+D2
+C
+C1
+C2
+C3
+C4
+Y
+Y1
+V
+V1
+V2
+VD
+QD
+Q
+Q1
+Q0
+O
+LF
+LC
+LB
+LJ
+NR
+NR1
+ND
+ND1
+ND2
+NN
+NT
+N1
+N2
+N3
+N4
+N
+PD
+P
+SW
+SD
+S
+D
+H
+HE
+LI
+BE
+B
+NE
+NA
+MG
+AL
+SI
+AR
+K
+CA
+SC
+TI
+VA
+CR
+MN
+FE
+CO
+NI
+CU
+ZN
+GA
+GE
+AS
+SE
+KR
+RB
+SR
+YA
+ZR
+NB
+MO
+TC
+RU
+RH
+PX
+AG
+CD
+IN
+SN
+SB
+TE
+LJ
+XE
+CS
+BA
+LA
+CE
+PR
+NX
+PM
+SM
+EU
+GD
+TD
+DY
+HO
+ER
+TM
+YB
+LU
+HF
+TA
+WO
+RE
+OS
+IR
+PZ
+AU
+HG
+TL
+PB
+BI
+PO
+AT
+RN
+FR
+RA
+AC
+TH
+PA
+UO
+1B     -OC(OBn)Me2  1-methyl-benzylozyethyl ether
+1M     -OC(OMe)Me2  1-methyl-1-methoxyethyl ether
+2T     -OCH2CH2SiMe3  2-Trimethylsilylethyl ether
+3M     -OCH2OCH2CH2SiMe3  2-(trimethylsilylethoxymethyl ether
+4M     -O-(C(-OMe)C4H8O)  4-methoxytetrahydropyranyl ether
+4P     -OCH2OCH2CH2CH2CH=CH2  4-Pentenyloxymethyl ether
+AA     -OCOOCH2CH=CH2  alkyl ally; carbonate
+Ac     -OCOMe  acetate  (AcOR)
+AE     -OCH2CH=CH2  allyl ether
+B5     (-O-)3B  borate ester (RO)3B No1
+B6     (-O-)3B  borate ester (RO)3B No1
+Bd     benzylidene acetal
+BM     -OSIMe2t-Bu  t-butyldimethylsilyl ether (TBDMSOR)
+BN     -OCH2Ph  Benzyl ether (Bn ether)
+BO     -OCH2OCH2C5H5  benzyloxymethyl ether (BOM ether)
+BP     -OSIPh2t-Bu  t-butyldiphenylsilyl ether (TBDPSOR)
+BU     -OtBu  t-butyl ether
+BZ     -OCOPh  benzoate (BzOR)
+cC     -OCONH0  cyclic carbamate C
+cM     -NHCOO-  cyclic carbamate N
+cN     -CN  cyano
+iN     C#N- Isonitryl (Carbon)
+C5     cyclic carbonate OC(OR)2 No1
+C6     cyclic carbonate OC(OR)2 No2
+CH     -OCOCH2Cl  chloroacetate
+CK     cyclohexylidene ketal
+CL     -OCH2OCH2CCl3  2,2,2-trichloroethoxymethyl ether
+CP     cyclopentylidene ketal
+dM     -NMe2  dimethylamino
+D5     di-t-butylsililene group DTBS(OR)2 No1
+D6     di-t-butylsililene group DTBS(OR)2 No2
+D7     di-t-butylsililene group DTBS(OR)2 No3
+D8     di-t-butylsililene group DTBS(OR)2 No4
+D9     di-t-butylsililene group DTBS(OR)2 No5
+DI     -OCH2C6H3-3,4-(OMe)2  3,4-dimethoxybenzyl ether
+DM     -OCPh(p-MeOC6H4)2  di(p-methoxyphenyl)phenylmethyl ether
+EB     ethyl boronate EtB(OR)2
+EE     -OCH(OEt)Me  1-ethoxyethyl ether (EE ether)
+EM     -OCH2OCH2CH2OCH3  2-methoxyethoxymethyl ether (MEM ether)
+EO     -OEt  ethyl ether
+FA     -OCOCF3  trifluoroacetate (TFAOR)
+FM           9-fluorenylmethyl carbonate (FmocOR)
+FO     -OCOH  formate
+gD     -NHC(NH)NMe2  N,N-dimethylguanidyl
+gm     -NHC(NH)NHMe  N-methylguanidyl type 2
+gM     -NMeC(NH)(NH2)  N-methylguanidyl type 1
+gN     -NHC(NH)(NH2)  guanidyl
+H      -H
+HP     -O-(C5H9O)  tetrahydropyranyl ether (THP ether)
+I5     isopropylidene ketal (acetonide) No1
+I6     isopropylidene ketal (acetonide) No2
+I7     isopropylidene ketal (acetonide) No3
+I8     isopropylidene ketal (acetonide) No4
+I9     isopropylidene ketal (acetonide) No5
+KE     ketone
+LV     -OCOCH2CH2COMe  levulinate
+MA     methylene acetal
+MB     -OCH2OC6H4-pOMe  p-methoxybenzyloxymethyl ether
+Mc     -OSO2CH2Cl  choloromethanesufonyl
+MC     -OCOOMe  alkyl methyl carbonate
+MD     p-methoxybenzylidene acetal
+ME     -OMe  methyl ether
+Mm     methoxymethylene acetal
+MM     -OCH2OCH3  methoxymethyl ether (MOM ether)
+MP     -OC6H4-pOMe  p-methoxyphenyl ether
+Ms     -OSO2Me  methanesufonyl (Ms)
+MS     -OSiMe3  trimethylsilyl ether (TMS ether)
+MT     -OCH2SCH3  methylthiomethyl ether (MTM ether)
+MZ     -OCH2C6H4-pOMe  p-methoxybenzyl ether (MPMOR)
+nA     -NHAc  N-acteylamide
+nC     -NC  isonitrile
+nO     -NO2  nitro
+NP     -OCONHPh  alkyl N-phenylcarbamate
+Nt     -OCH2C6H4-pNO2  p-nitrobenzyl ether
+OH     -OH
+OR     1-methoxyethylidene ortho ester
+PI     -OCOCMe3  pivaloate (PivOR)
+PN     -OCOCH2OPh  phenoxyacetatate
+Pt     -OCPh2(p-MeOC6H4)  p-methoxypehnyldiphenylmethyl ether
+RI     -PCOC6H3(2,4,6-Me3)  2,4,6-trimethylbenzoate (mesitoate)
+SF     -OSO3-  sulfate
+T5     1,3-(1,1,3,3-tetraisopropyldisiloxanylidene TIPDS(OR)2 No1
+T6     1,3-(1,1,3,3-tetraisopropyldisiloxanylidene TIPDS(OR)2 No2
+TB     -OCH2Ot-Bu  t-Butoxymethyl ether
+Tc     -OCOOCH2CCl3  alkyl 2,2,2-trichloroethyl cabonate
+TF     -O-(C4H7O)  tetrahydrofuranyl ether (THF ether)
+TP     -OSi(i-Pr)3  triisopropylsilyl ether (TIPSOR)
+TR     -OCPh3  triphenylmethyl ether (trityl etehr: TrOR)
+Ts     -OSO2C6H4p-Me  p-toluenesulfonyl (Ts)
+TS     -OSiEt3  triethylsilyl ether (TES ether)
+TT     -O-(C5H9S)  tetrahydrothiopyranyl ether
+uC     -NHCONH-  cyclic ureido
+uR     -NHCONH2  ureido
+?
+irC
+irO
+irN
