@@ -5,15 +5,16 @@ import java.awt.image.BufferedImage
 import javax.swing.ImageIcon
 
 import application.{RMapViewer, ScratchingBrowser}
-import graph.Vertex
+import graph.{ReactionMap, Vertex}
+
 import scala.swing._
-import scala.swing.event.{MouseClicked, ListSelectionChanged}
+import scala.swing.event.{ListSelectionChanged, MouseClicked}
 
 /**
   * Created by tomohiro on 2016/02/24.
   */
 class MoleculeList extends ScrollPane {
-  def rmap = RMapViewer.rmap
+  def rmap:ReactionMap = RMapViewer.rmap
 
   val listView: ListView[ImageIcon] = new ListView[ImageIcon]() {
     selection.intervalMode = ListView.IntervalMode.MultiInterval
@@ -26,7 +27,7 @@ class MoleculeList extends ScrollPane {
       listenTo(mouse.clicks)
       reactions += {
         case e: MouseClicked =>
-          if (e.peer.getButton() > 1 && listView.selection.indices.nonEmpty) {
+          if (e.peer.getButton > 1 && listView.selection.indices.nonEmpty) {
             RMapViewer.mapPanel.popupMenu(listVertices(listView.selection.indices.head)).show(ScratchingBrowser.moleculeList.peer, e.point.x, e.point.y)
           }
       }
@@ -35,11 +36,11 @@ class MoleculeList extends ScrollPane {
     Command.listenTo(selection)
   }
 
-  def width = size.width
+  def width:Int = size.width
 
   var listVertices: List[Vertex] = List()
 
-  def update(vertices: List[Vertex]) = {
+  def update(vertices: List[Vertex]):Unit = {
     listVertices = vertices
     listView.listData = vertices.map((vertex: Vertex) => {
       val image = new BufferedImage(width - 30, 64, BufferedImage.TYPE_INT_BGR)

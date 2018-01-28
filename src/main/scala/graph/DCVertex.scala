@@ -1,6 +1,7 @@
 package graph
 
 import geometry.XYZFrame
+import net.sourceforge.rmapviewer.rmapjmol.RMapJmol
 
 /**
  * Created by tomohiro on 15/02/10.
@@ -8,7 +9,7 @@ import geometry.XYZFrame
 class DCVertex(json:Map[String, Any]) extends Vertex(json:Map[String, Any]) {
   override val isDC = true
 
-  override def openJmol() = {
+  override def openJmol():RMapJmol = {
     val jmol = super.openJmol()
     jmol.nextStructure()
     jmol

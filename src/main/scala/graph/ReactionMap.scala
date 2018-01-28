@@ -6,7 +6,7 @@ package graph
 
 import java.io._
 
-import application.ScratchingBrowser
+import application.{RMapClient, ScratchingBrowser}
 import org.json4s._
 import org.json4s.jackson.{JsonMethods, Serialization}
 
@@ -51,7 +51,7 @@ class ReactionMap() {
     changed(GraphAspect.PATH)
   }
 
-  def setVerticesAndEdges(vs: List[Vertex], es: List[Edge]) = {
+  def setVerticesAndEdges(vs: List[Vertex], es: List[Edge]):Unit = {
     vertices = vs
     edges = es
     reactants.clear()
@@ -61,7 +61,7 @@ class ReactionMap() {
     changed(GraphAspect.MAP)
   }
 
-  def addReactant(vertex: Vertex) {
+  def addReactant(vertex: Vertex):Unit = {
     reactants += vertex
     products -= vertex
     selections -= vertex
@@ -72,7 +72,7 @@ class ReactionMap() {
     reactants contains vertex
   }
 
-  def addProduct(vertex: Vertex) {
+  def addProduct(vertex: Vertex):Unit = {
     reactants -= vertex
     products += vertex
     selections -= vertex
@@ -83,13 +83,13 @@ class ReactionMap() {
     products contains vertex
   }
 
-  def setSelections(vertices: List[Vertex]) = {
+  def setSelections(vertices: List[Vertex]):Unit = {
     selections.clear()
     selections ++= vertices
     changed(GraphAspect.SELECTION)
   }
 
-  def addSelection(vertex: Vertex) {
+  def addSelection(vertex: Vertex):Unit = {
     reactants -= vertex
     products -= vertex
     selections += vertex
@@ -100,54 +100,54 @@ class ReactionMap() {
     selections contains vertex
   }
 
-  def addSelectionsToReactants() = {
+  def addSelectionsToReactants():Unit = {
     reactants ++= selections
     setSelections(List())
   }
 
-  def addSelectionsToProducts() = {
+  def addSelectionsToProducts():Unit = {
     products ++= selections
     setSelections(List())
   }
 
-  def openScratchingBrowser() = {
+  def openScratchingBrowser():Unit = {
     ScratchingBrowser.open()
   }
 
-  def unselect(vertex: Vertex) {
+  def unselect(vertex: Vertex):Unit = {
     reactants -= vertex
     products -= vertex
     selections -= vertex
     changed(GraphAspect.SELECTION)
   }
 
-  def unselectAll() = {
+  def unselectAll():Unit = {
     setSelections(List())
   }
 
-  def searchLabel() = {
-    (Dialog.showInput[String](null, "Search Label: ", "RMapViewer", initial = "")) match {
+  def searchLabel():Unit = {
+    Dialog.showInput[String](null, "Search Label: ", "RMapViewer", initial = "") match {
       case Some(query) => setSelections(vertices.filter(_.label == query))
       case  None => ()
     }
   }
 
-  def searchSmiles() = {
-    (Dialog.showInput[String](null, "Search SMILES: ", "RMapViewer", initial = "")) match {
+  def searchSmiles():Unit = {
+    Dialog.showInput[String](null, "Search SMILES: ", "RMapViewer", initial = "") match {
       case Some(query) => setSelections(vertices.filter(_.smiles.contains(query)))
       case  None => ()
     }
   }
 
-  def searchInchi() = {
-    (Dialog.showInput[String](null, "Search InChI: ", "RMapViewer", initial = "")) match {
+  def searchInchi():Unit = {
+    Dialog.showInput[String](null, "Search InChI: ", "RMapViewer", initial = "") match {
       case Some(query) => setSelections(vertices.filter(_.inchi.contains(query)))
       case  None => ()
     }
   }
 
-  def searchCanost() = {
-    (Dialog.showInput[String](null, "Search CAST-1D: ", "RMapViewer", initial = "")) match {
+  def searchCanost():Unit = {
+    Dialog.showInput[String](null, "Search CAST-1D: ", "RMapViewer", initial = "") match {
       case Some(query) => setSelections(vertices.filter(_.canost.contains(query)))
       case  None => ()
     }
@@ -161,10 +161,19 @@ class ReactionMap() {
     readFrom(JsonMethods.parse(ReaderInput(new FileReader(filename))).values.asInstanceOf[Map[String, Any]])
   }
 
+  def openRmapClient():Unit = {
+    RMapClient.open()
+  }
+
+  def openRmap(vs:List[Vertex], es:List[Edge], grrm:String):Unit = {
+    this.grrm = grrm
+    setVerticesAndEdges(vs, es)
+  }
+
   def readFrom(json: Map[String, Any]): Unit = {
     val vertices = json("vertices").asInstanceOf[List[Map[String, Any]]].map(json_vertex => Vertex(json_vertex))
     val edges = json("edges").asInstanceOf[List[Map[String, BigInt]]].map(json_edge =>
-      new Edge(
+      Edge(
         vertices(json_edge("vertex1").intValue()),
         vertices(json_edge("vertex2").intValue()),
         json_edge))
@@ -176,7 +185,7 @@ class ReactionMap() {
     setVerticesAndEdges(vertices, edges)
   }
 
-  def openRmapFile() = {
+  def openRmapFile():Unit = {
     import java.awt.FileDialog
     val file_dialog: FileDialog = new FileDialog(null: javax.swing.JFrame, "Choose an rmap file", FileDialog.LOAD)
     file_dialog.setVisible(true)
@@ -206,7 +215,7 @@ class ReactionMap() {
     }
   }
 
-  def saveRmapFile() = {
+  def saveRmapFile():Unit = {
     import java.awt.FileDialog
     val file_dialog: FileDialog = new FileDialog(null: javax.swing.JFrame, "Saving an rmap file", FileDialog.SAVE)
     file_dialog.setVisible(true)
@@ -220,7 +229,7 @@ class ReactionMap() {
     readFrom(new GRRMImporter(dirname, comfile).toJSON)
   }
 
-  def importFromGRRM() = {
+  def importFromGRRM():Unit = {
     import java.awt.FileDialog
     val file_dialog: FileDialog = new FileDialog(null: javax.swing.JFrame, "Select a .com file", FileDialog.LOAD)
     file_dialog.setVisible(true)

@@ -8,7 +8,7 @@ import geometry._
 import net.sourceforge.rmapviewer.rmapjmol.RMapJmol
 
 import scala.collection.mutable
-import scala.swing.{Dialog, Swing}
+import scala.swing.{Swing, Dialog}
 
 /**
  * Created by tomohiro on 2014/07/31.
@@ -49,7 +49,7 @@ abstract case class Vertex(json:Map[String, Any]) {
   val isTS:Boolean = false
   val isEQ:Boolean = false
 
-  def openJmol() = {
+  def openJmol():RMapJmol = {
     new RMapJmol(
       this.label,
       this.multiframeFrames.map(_.toXYZ).reduce(_+_),
@@ -57,19 +57,19 @@ abstract case class Vertex(json:Map[String, Any]) {
       this.multiframeEnergies.toArray)
   }
 
-  def showInfo() = {
+  def showInfo():Unit = {
     var msg = List(label, "Energy:"+energy+"kJ/mol", "SMILES:"+smiles, "InChI:"+inchi, "CAST-1D:"+canost).mkString("\n")
     Dialog.showMessage(null, msg, "RMapViewer:"+label, Dialog.Message.Plain, Swing.Icon(image))
   }
 
   def continueFrames(frame:XYZFrame, from:Vertex, to:Vertex) = {
     val frames = framesFromTo(from, to)
-    val transformation = frame.transformation(frames(0))
+    val transformation = frame.transformation(frames.head)
     frames.map(_.transformedBy(transformation))
   }
   def continueFrames(frame:XYZFrame, from:Vertex) = {
     val frames = framesFrom(from)
-    val transformation = frame.transformation(frames(0))
+    val transformation = frame.transformation(frames.head)
     frames.map(_.transformedBy(transformation))
   }
 
@@ -86,7 +86,7 @@ abstract case class Vertex(json:Map[String, Any]) {
   def multiframeFrames:List[XYZFrame]
   def multiframeIndex:Int
   def multiframeCaptions:List[String]
-  val image = createImage()
+  val image:BufferedImage = createImage()
   def createImage():BufferedImage = {
     val xs = geometry.map(quad=>quad(1).asInstanceOf[Double])
     val ys = geometry.map(quad=>quad(2).asInstanceOf[Double])

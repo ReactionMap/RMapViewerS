@@ -17,22 +17,30 @@ object RMapViewer extends SimpleSwingApplication {
       contents += new Menu("File") {
         contents += new MenuItem("Open...") {
           action = new Action("Open...") {
-            def apply = {
+            def apply:Unit = {
               rmap.openRmapFile()
             }
           }
         }
         contents += new MenuItem("Save...") {
           action = new Action("Save...") {
-            def apply = {
+            def apply:Unit = {
               rmap.saveRmapFile()
+            }
+          }
+        }
+        contents += new Separator()
+        contents += new MenuItem("Open server...") {
+          action = new Action("Open server...") {
+            def apply:Unit = {
+              rmap.openRmapClient()
             }
           }
         }
         contents += new Separator()
         contents += new MenuItem("Import...") {
           action = new Action("Import...") {
-            def apply = {
+            def apply:Unit = {
               rmap.importFromGRRM()
             }
           }
@@ -41,7 +49,7 @@ object RMapViewer extends SimpleSwingApplication {
       contents += new Menu("Edit") {
         contents += new MenuItem("Unselect all") {
           action = new Action("Unselect all") {
-            def apply = {
+            def apply:Unit = {
               rmap.unselectAll()
             }
           }
@@ -49,14 +57,14 @@ object RMapViewer extends SimpleSwingApplication {
         contents += new Separator()
         contents += new MenuItem("Add selection to reactants") {
           action = new Action("Add selection to reactants") {
-            def apply = {
+            def apply:Unit = {
               rmap.addSelectionsToReactants()
             }
           }
         }
         contents += new MenuItem("Add selection to products") {
           action = new Action("Add selection to products") {
-            def apply = {
+            def apply:Unit = {
               rmap.addSelectionsToProducts()
             }
           }
@@ -66,35 +74,35 @@ object RMapViewer extends SimpleSwingApplication {
       contents += new Menu("Search") {
         contents += new MenuItem("Label...") {
           action = new Action("Label...") {
-            def apply = {
+            def apply:Unit = {
               rmap.searchLabel()
             }
           }
         }
         contents += new MenuItem("SMILES...") {
           action = new Action("SMILES...") {
-            def apply = {
+            def apply:Unit = {
               rmap.searchSmiles()
             }
           }
         }
         contents += new MenuItem("InChI...") {
           action = new Action("InChI...") {
-            def apply = {
+            def apply:Unit = {
               rmap.searchInchi()
             }
           }
         }
         contents += new MenuItem("CAST-1D...") {
           action = new Action("CAST-1D...") {
-            def apply = {
+            def apply:Unit = {
               rmap.searchCanost()
             }
           }
         }
         contents += new MenuItem("Draw...") {
           action = new Action("Draw...") {
-            def apply = {
+            def apply:Unit = {
               rmap.openScratchingBrowser()
             }
           }
