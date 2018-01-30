@@ -36,6 +36,9 @@ abstract case class Vertex(json:Map[String, Any]) {
   val structureSignature:StructureSignature = new StructureSignature(geometry, bonds)
 
   val energy: Double = json("energy").asInstanceOf[Double]
+  var baselineEnergy: Double = energy
+  def kJmol:Double = (energy-baselineEnergy) * 2625.5
+  def kJmolString = BigDecimal(kJmol).setScale(1, BigDecimal.RoundingMode.HALF_UP).toString+"kJ/mol"
   def apply(key:String):Any = {
     json(key)
   }
@@ -58,7 +61,7 @@ abstract case class Vertex(json:Map[String, Any]) {
   }
 
   def showInfo():Unit = {
-    var msg = List(label, "Energy:"+energy+"kJ/mol", "SMILES:"+smiles, "InChI:"+inchi, "CAST-1D:"+canost).mkString("\n")
+    var msg = List(label, "Energy:"+kJmolString, "SMILES:"+smiles, "InChI:"+inchi, "CAST-1D:"+canost).mkString("\n")
     Dialog.showMessage(null, msg, "RMapViewer:"+label, Dialog.Message.Plain, Swing.Icon(image))
   }
 
@@ -87,14 +90,13 @@ abstract case class Vertex(json:Map[String, Any]) {
   def multiframeIndex:Int
   def multiframeCaptions:List[String]
   val image:BufferedImage = createImage()
-  def createImage():BufferedImage = {
+  def createImage(imageExtent:Int=64):BufferedImage = {
     val xs = geometry.map(quad=>quad(1).asInstanceOf[Double])
     val ys = geometry.map(quad=>quad(2).asInstanceOf[Double])
     val zs = geometry.map(quad=>quad(3).asInstanceOf[Double])
     val coords = List(xs.max - xs.min, ys.max - ys.min, zs.max - zs.min)
     val trans = coords.indices.sortBy(coords(_))
     val geom = geometry.map(quad=>List(quad(0), quad(trans(2)+1), quad(trans(1)+1), quad(trans(0)+1)))
-    val imageExtent = 64
     val image = new BufferedImage(imageExtent, imageExtent, BufferedImage.TYPE_INT_ARGB)
     val graphics = image.createGraphics()
     val zSortedIndices = geom.indices.sortWith(

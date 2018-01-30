@@ -52,6 +52,8 @@ class ReactionMap() {
   }
 
   def setVerticesAndEdges(vs: List[Vertex], es: List[Edge]):Unit = {
+    val e0 = vs.map((v)=>v.energy).min
+    vs.foreach((v)=>v.baselineEnergy = e0)
     vertices = vs
     edges = es
     reactants.clear()

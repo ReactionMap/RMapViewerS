@@ -1,17 +1,10 @@
 Manifest-Version: 1.0
+Class-Path: skinny-http-client_2.10-2.5.2.jar Jmol.jar RMapJmol.jar sc
+ ala-library-2.10.7.jar scala-reflect-2.10.7.jar scala-swing-2.10.7.ja
+ r scala-library-2.10.7-sources.jar scala-reflect-2.10.7-sources.jar s
+ lf4j-api-1.7.25.jar slf4j-simple-1.6.4.jar jackson-annotations-2.3.0.
+ jar jackson-core-2.3.1.jar jackson-databind-2.3.1.jar json4s-ast_2.10
+ -3.2.10.jar json4s-core_2.10-3.2.10.jar json4s-jackson_2.10-3.2.10.ja
+ r skinny-micro-common_2.10-1.2.8.jar
 Main-Class: application.RMapViewer
-Class-Path: Jmol.jar
-  RMapJmol.jar
-  jackson-annotations-2.3.0.jar
-  paranamer-2.6.jar
-  jackson-core-2.3.1.jar
-  scala-compiler-2.10.0.jar
-  jackson-databind-2.3.1.jar
-  scala-library-2.10.6.jar
-  json4s-ast_2.10-3.2.10.jar
-  scala-reflect-2.10.0.jar
-  json4s-core_2.10-3.2.10.jar
-  scala-swing-2.10.6.jar
-  json4s-jackson_2.10-3.2.10.jar
-  scalap-2.10.0.jar
 
