@@ -22,14 +22,19 @@ Please note that each library has its own copyright and license.
 
 * Jmol.jar (version 10.x) (home page: http://jmol.sourceforge.net/ , [download](https://sourceforge.net/projects/jmol/files/Jmol/Version%2010.2.0/))
 * RMapJmol.jar (home page: https://github.com/ReactionMap/RMapJmol , [download](https://github.com/ReactionMap/RMapJmol/releases))
+* jackson-annotations-2.3.0.jar (homepage: https://github.com/FasterXML/jackson-annotations , [download](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations/2.3.0))
 * jackson-core-2.3.1.jar (homepage: https://github.com/FasterXML/jackson-core , [download](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.3.1))
 * jackson-databind-2.3.1.jar (homepage: https://github.com/FasterXML/jackson-databind , [download](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.3.1))
-* jackson-annotations-2.3.0.jar (homepage: https://github.com/FasterXML/jackson-annotations , [download](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations/2.3.0))
 * json4s-ast_2.10-3.2.10.jar (homepage: https://github.com/json4s/json4s , [download](https://mvnrepository.com/artifact/org.json4s/json4s-ast_2.10/3.2.10))
+* json4s-core_2.10-3.2.10.jar (homepage https://github.com/json4s/json4s , [download](https://mvnrepository.com/artifact/org.json4s/json4s-core_2.10/3.2.10))
+* json4s-jackson.10-3.2.10.jar (homepage https://github.com/json4s/json4s , [download](https://mvnrepository.com/artifact/org.json4s/json4s-jackson_2.10/3.2.10))
+* scala-library-2.10.7.jar (homepage https://www.scala-lang.org/ , [download](https://mvnrepository.com/artifact/org.scala-lang/scala-library/2.10.7))
+* scala-reflect-2.10.7.jar (homepage http://www.scala-lang.org/ , [download](https://mvnrepository.com/artifact/org.scala-lang/scala-reflect/2.10.7))
+* scala-swing-2.10.7.jar (homepage http://www.scala-lang.org/ , [download](https://mvnrepository.com/artifact/org.scala-lang/scala-swing/2.10.7))
 * skinny-http-client_2.10-2.5.2.jar (homepage: http://skinny-framework.org/documentation/http-client.html , [download](https://mvnrepository.com/artifact/org.skinny-framework/skinny-http-client_2.10/2.5.2))
-* skinny-micro-common_2.10-1.2.8.jar (homepage: http://skinny-framework.org/ , [download](https://mvnrepository.com/artifact/org.skinny-framework/skinny-micro_2.10/1.2.8))
+* skinny-micro-common_2.10-1.2.8.jar (homepage: http://skinny-framework.org/ , [download](https://mvnrepository.com/artifact/org.skinny-framework/skinny-micro-common_2.10/1.2.8))
 * slf4j-api-1.7.25.jar (homepage: https://www.slf4j.org/ , [download](https://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.25))
-* slf4j-simple-1.6.4.jar (homepage: https://www.slf4j.org/ , [download](https://mvnrepository.com/artifact/org.slf4j/slf4j-simple/1.7.25))
+* slf4j-simple-1.6.4.jar (homepage: https://www.slf4j.org/ , [download](https://mvnrepository.com/artifact/org.slf4j/slf4j-simple/1.6.4))
 
 4. Launch RMapViewerS
 
