@@ -241,7 +241,7 @@ class MoleculeSketch extends Panel {
     menu.add(item)
   }
 
-  def matches(commands:List[(Either[String, Int], Either[String, Int])])(atoms2 : List[List[Any]], bonds2 : List[(Int, Int, Int)]) : Boolean = {
+  def matches(commands:List[(Either[String, Int], Either[String, Int])], atoms2 : List[List[Any]], bonds2 : List[(Int, Int, Int)]) : Boolean = {
     val superElementBag: Bag[String] =
       new Bag[String](atoms2.map((a) => a.head.asInstanceOf[String]))
     val subElementBag: Bag[String] =
@@ -279,9 +279,11 @@ class MoleculeSketch extends Panel {
         .map(b =>
           if (b._1 == before) (after, b._2, b._3 / (b._1 match {
             case Left(a) => elementsBag.occurrencesOf(atoms(a)._1.symbol)
+            case _ => 0
           }))
           else if (b._2 == before) (b._1, after, b._3 / (b._2 match {
             case Left(a) => elementsBag.occurrencesOf(atoms(a)._1.symbol)
+            case _ => 0
           }))
           else b)
         .sortBy((b: (Either[Int, Int], Either[Int, Int], Int)) => b._3)
@@ -303,26 +305,32 @@ class MoleculeSketch extends Panel {
               atomId = atomId + 1
               replace(Left(a), Right(atomId))
               atom1 = Right(atomId)
+            case Right(_) =>
           }
-          b
+          (atom1, b._2, b._3)
       }
-      bondsAndWeights = bondsAndWeights.filter(_ != bond)
+      println("bondsAndWeights:"+bondsAndWeights)
+      bondsAndWeights = bondsAndWeights.filter(b => b._1 != bond._1 || b._2 != bond._2)
+      println("removed "+bond)
+      println("bondsAndWeights:"+bondsAndWeights)
       var atom2: Either[Int, Int] =
         if (bond._1 == atom1)
           bond._2
         else
           bond._1
       commands = (
-        atom1 match {case Left(a) => Left(atoms(a)._1.symbol) case Right(b) => Right(b)},
+        atom match {case Left(a) => Left(atoms(a)._1.symbol) case Right(b) => Right(b)},
         atom2 match {case Left(a) => Left(atoms(a)._1.symbol) case Right(b) => Right(b)}) :: commands
       atom2 match {
         case Left(a) =>
           atomId = atomId + 1
           replace(Left(a), Right(atomId))
           atom2 = Right(atomId)
+        case Right(_) =>
       }
       atom = atom2
     }
+    println("command: "+commands.reverse)
     commands.reverse
   }
 
@@ -350,11 +358,13 @@ class MoleculeSketch extends Panel {
           case Left(_) =>
             atomId = atomId + 1
             newBonds = replace(newBonds, b._1, Right(atomId))
+          case _ =>
         }
         b._2 match {
           case Left(_) =>
             atomId = atomId + 1
             newBonds = replace(newBonds, b._2, Right(atomId))
+          case _ =>
         }
         if (executeMatchingCommands(commands.tail, atoms, newBonds, atomId))
           return true
@@ -366,11 +376,13 @@ class MoleculeSketch extends Panel {
           case Left(_) =>
             atomId = atomId + 1
             newBonds = replace(newBonds, b._2, Right(atomId))
+          case _ =>
         }
         b._1 match {
           case Left(_) =>
             atomId = atomId + 1
             newBonds = replace(newBonds, b._1, Right(atomId))
+          case _ =>
         }
         if (executeMatchingCommands(commands.tail, atoms, newBonds, atomId))
           return true

@@ -38,9 +38,9 @@ object ScratchingBrowser extends Frame {
 
   def updateMoleculeList() = {
     val geometrySignature = moleculeSketch.geometrySignature
-    val structureSignature = moleculeSketch.structureSignature
+    val command = moleculeSketch.generateMatchingCommands(RMapViewer.rmap.vertices.head.geometry.map(_.head.asInstanceOf[String]))
     moleculeList.update(RMapViewer.rmap.vertices.toList
-      .filter((vertex:Vertex)=>vertex.structureSignature == structureSignature)
+      .filter((vertex:Vertex)=>moleculeSketch.matches(command, vertex.geometry, vertex.bonds))
       .map((vertex: Vertex) => (vertex, geometrySignature.dist(vertex.geometrySignature)))
       .sortWith { case (less: (Vertex, Double), more: (Vertex, Double)) => less._2 <= more._2 }
       .map(_._1))
