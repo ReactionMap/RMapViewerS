@@ -24,7 +24,6 @@ class MoleculeSketch extends Panel {
   def geometrySignature:GeometrySignature = new GeometrySignature(geometry)
   def structureSignature:StructureSignature = {
     val inds = atomInds
-    println("structure signature = "+new StructureSignature(geometry, bonds.map((pair:((Int,Int),Int))=>(inds(pair._1._1), inds(pair._1._2), pair._2)).toList).value)
     new StructureSignature(geometry, bonds.map((pair:((Int,Int),Int))=>(inds(pair._1._1), inds(pair._1._2), pair._2)).toList)
   }
 
@@ -309,10 +308,7 @@ class MoleculeSketch extends Panel {
           }
           (atom1, b._2, b._3)
       }
-      println("bondsAndWeights:"+bondsAndWeights)
       bondsAndWeights = bondsAndWeights.filter(b => b._1 != bond._1 || b._2 != bond._2)
-      println("removed "+bond)
-      println("bondsAndWeights:"+bondsAndWeights)
       var atom2: Either[Int, Int] =
         if (bond._1 == atom1)
           bond._2
@@ -330,7 +326,6 @@ class MoleculeSketch extends Panel {
       }
       atom = atom2
     }
-    println("command: "+commands.reverse)
     commands.reverse
   }
 
