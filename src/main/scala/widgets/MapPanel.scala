@@ -39,10 +39,15 @@ case class MapPanel(rmap : ReactionMap) extends Panel {
     case event: MouseReleased => dragging = false
     case event: MouseWheelMoved => zoom(event.rotation)
     case event: MouseClicked =>
-      hoverVertex(event.point.x, event.point.y) match {
-      case Some(vertex) => popupMenu(vertex).show(peer, event.point.x, event.point.y)
-      case None => ()
-    }
+      if (event.peer.getButton > 1)
+        hoverVertex match {
+          case None => ()
+          case Some(vertex) => popupMenu(vertex).show(peer, event.point.x, event.point.y)
+        }
+      else {
+        hoverVertex = hoverVertex(event.point.x, event.point.y)
+        repaint()
+      }
   }
 
   def popupMenu(vertex: Vertex):javax.swing.JPopupMenu = {
@@ -155,8 +160,8 @@ case class MapPanel(rmap : ReactionMap) extends Panel {
     val LABEL_HEIGHT: Int = fontMetrics.getHeight + labelMargin * 2
     last_label_width = LABEL_WIDTH
     last_label_height = LABEL_HEIGHT
-    val lineColor = if (rmap.path == None) Color.BLACK else Color.LIGHT_GRAY
-    val labelColor = if (rmap.path == None) Color.LIGHT_GRAY else Color.LIGHT_GRAY.brighter()
+    val lineColor = if (rmap.path == None && hoverVertex == None) Color.BLACK else Color.LIGHT_GRAY
+    val labelColor = if (rmap.path == None && hoverVertex == None) Color.LIGHT_GRAY else Color.LIGHT_GRAY.brighter()
     graphics.setPaint(lineColor)
     for (edge <- rmap.edges) {
       positionToPoint(xNumerizer(edge.vertex1), yNumerizer(edge.vertex1), width, height) match {
@@ -271,6 +276,25 @@ case class MapPanel(rmap : ReactionMap) extends Panel {
             case None => ()
           }
         }
+    }
+    hoverVertex match {
+      case Some(vertex) =>
+        positionToPoint(xNumerizer(vertex), yNumerizer(vertex), width, height) match {
+          case Some(point) =>
+            val x: Int = point.x.toInt-LABEL_WIDTH/2
+            val y: Int = point.y.toInt-LABEL_HEIGHT/2
+            val labelOffsetY = LABEL_HEIGHT - labelMargin - fontMetrics.getDescent
+            val labelOffsetX = (LABEL_WIDTH-fontMetrics.stringWidth(vertex.label)) / 2
+            if (vertex.label.charAt(0) == 'E') graphics.setPaint(labelColor) else graphics.setPaint(Color.WHITE)
+            graphics.fillRect(x, y, LABEL_WIDTH, LABEL_HEIGHT)
+              graphics.setPaint(Color.BLACK)
+              graphics.drawString(vertex.label, x + labelOffsetX, y + labelOffsetY)
+              graphics.setPaint(Color.BLACK)
+              graphics.setStroke(new BasicStroke(3))
+              graphics.drawRect(x-1, y-1, LABEL_WIDTH+2, LABEL_HEIGHT+2)
+          case None => ()
+        }
+      case None => ()
     }
   }
 
@@ -435,6 +459,7 @@ case class MapPanel(rmap : ReactionMap) extends Panel {
     }
     hover
   }
+  var hoverVertex:Option[Vertex] = None
 
   private var _xNumerizer:Numerizer = new MapXNumerizer(rmap)
   private var _yNumerizer:Numerizer = new MapYNumerizer(rmap)

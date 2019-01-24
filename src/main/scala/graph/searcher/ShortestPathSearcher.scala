@@ -11,7 +11,6 @@ abstract class ShortestPathSearcher(rmap:ReactionMap, shortestOnly:Boolean) {
   val basename:String
   def name = basename + (if (shortestOnly) "(shortest only)" else "(shortest+2hops)")
   def search():List[List[Vertex]] = {
-    println("start searching")
     if (rmap.reactants.isEmpty || rmap.products.isEmpty)
       return List()
     rmap.progress = 0.25

@@ -203,9 +203,4 @@ object XYZFrame {
     frame
   }
 
-  def main(args: Array[String]) {
-    val frame1 = XYZFrame("3\n\nH\t0.0 1.0 1.0\nH\t2.0\t3.0\t4.0\nO -1.0 -1.0 -1.0\n")
-    val frame2 = XYZFrame("3\n\nH\t1.0 2.0 2.0\nH\t3.0\t4.0\t5.0\nO 0.0 0.0 0.0\n")
-    println(frame2.transformedBy(frame1.transformation(frame2)).toXYZ)
-  }
 }

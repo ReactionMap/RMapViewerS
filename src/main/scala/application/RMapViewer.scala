@@ -49,28 +49,12 @@ object RMapViewer extends SimpleSwingApplication {
       contents += new Menu("Edit") {
         contents += new MenuItem("Unselect all") {
           action = new Action("Unselect all") {
-            def apply:Unit = {
+            def apply: Unit = {
               rmap.unselectAll()
             }
           }
         }
-        contents += new Separator()
-        contents += new MenuItem("Add selection to reactants") {
-          action = new Action("Add selection to reactants") {
-            def apply:Unit = {
-              rmap.addSelectionsToReactants()
-            }
-          }
-        }
-        contents += new MenuItem("Add selection to products") {
-          action = new Action("Add selection to products") {
-            def apply:Unit = {
-              rmap.addSelectionsToProducts()
-            }
-          }
-        }
       }
-
       contents += new Menu("Search") {
         contents += new MenuItem("Label...") {
           action = new Action("Label...") {

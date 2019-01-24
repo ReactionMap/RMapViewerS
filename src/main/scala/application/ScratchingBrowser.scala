@@ -4,7 +4,7 @@ import graph.Vertex
 import widgets.{MoleculeList, MoleculeSketch, PeriodicTable}
 
 import scala.swing._
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ButtonClicked, ListSelectionChanged, MouseClicked}
 
 /**
   * Created by tomohiro on 2016/02/23.
@@ -18,7 +18,20 @@ object ScratchingBrowser extends Frame {
       case _: ButtonClicked => updateMoleculeList()
     }
   }
-  val moleculeList = new MoleculeList()
+  val moleculeList = new MoleculeList() {
+    listenTo(selection)
+    reactions += {
+      case ListSelectionChanged(source, range, live) =>
+        rmap.setSelections(source.selection.indices.toList.map(listVertices(_)))
+    }
+    listenTo(listView.mouse.clicks)
+    reactions += {
+      case e: MouseClicked =>
+        if (e.peer.getButton > 1 && listView.selection.indices.nonEmpty)
+          RMapViewer.mapPanel.popupMenu(listVertices(listView.selection.indices.head)).show(peer, e.point.x, e.point.y)
+    }
+  }
+
   override val title = "RMapViewer"
   contents = new BoxPanel(Orientation.Horizontal) {
     contents += new BoxPanel(Orientation.Vertical) {

@@ -85,12 +85,6 @@ class ReactionMap() {
     products contains vertex
   }
 
-  def setSelections(vertices: List[Vertex]):Unit = {
-    selections.clear()
-    selections ++= vertices
-    changed(GraphAspect.SELECTION)
-  }
-
   def addSelection(vertex: Vertex):Unit = {
     reactants -= vertex
     products -= vertex
@@ -98,10 +92,26 @@ class ReactionMap() {
     changed(GraphAspect.SELECTION)
   }
 
+  def addSelections(vertices: List[Vertex]):Unit = {
+    reactants --= vertices
+    products --= vertices
+    selections ++= vertices
+    changed(GraphAspect.SELECTION)
+  }
+
+  def setSelections(vertices: List[Vertex]):Unit = {
+    reactants --= vertices
+    products --= vertices
+    selections.clear()
+    selections ++= vertices
+    changed(GraphAspect.SELECTION)
+  }
+
   def isSelected(vertex: Vertex): Boolean = {
     selections contains vertex
   }
 
+  /*
   def addSelectionsToReactants():Unit = {
     reactants ++= selections
     setSelections(List())
@@ -111,9 +121,34 @@ class ReactionMap() {
     products ++= selections
     setSelections(List())
   }
+  */
 
-  def openScratchingBrowser():Unit = {
-    ScratchingBrowser.open()
+  def moveSelectionsToReactants(vertices: List[Vertex]):Unit = {
+    reactants ++= vertices
+    products --= vertices
+    selections --= vertices
+    changed(GraphAspect.SELECTION)
+  }
+
+  def moveSelectionsToProducts(vertices: List[Vertex]):Unit = {
+    reactants --= vertices
+    products ++= vertices
+    selections --= vertices
+    changed(GraphAspect.SELECTION)
+  }
+
+  def moveReactantsToSelections(vertices: List[Vertex]):Unit = {
+    reactants --= vertices
+    products --= vertices
+    selections ++= vertices
+    changed(GraphAspect.SELECTION)
+  }
+
+  def moveProductsToSelections(vertices: List[Vertex]):Unit = {
+    reactants --= vertices
+    products --= vertices
+    selections ++= vertices
+    changed(GraphAspect.SELECTION)
   }
 
   def unselect(vertex: Vertex):Unit = {
@@ -123,8 +158,19 @@ class ReactionMap() {
     changed(GraphAspect.SELECTION)
   }
 
+  def unselectAll(vertices: List[Vertex]):Unit = {
+    reactants --= vertices
+    products --= vertices
+    selections --= vertices
+    changed(GraphAspect.SELECTION)
+  }
+
   def unselectAll():Unit = {
     setSelections(List())
+  }
+
+  def openScratchingBrowser():Unit = {
+    ScratchingBrowser.open()
   }
 
   def searchLabel():Unit = {
@@ -183,7 +229,6 @@ class ReactionMap() {
       case Some(grrmopts) => grrmopts.asInstanceOf[String]
       case None => ""
     }
-    println("MAP:" + vertices(0).label + " bonds: " + vertices(0).bonds)
     setVerticesAndEdges(vertices, edges)
   }
 

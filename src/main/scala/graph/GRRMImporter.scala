@@ -25,11 +25,8 @@ class GRRMImporter(dirname: File, comfilename: String) {
   val EQs0: List[EQ] = readEQ()
   val num_grids: Int = Math.ceil(Math.sqrt(EQs0.length) + 0.5).toInt
   val EQs: List[EQ] = EQs0 ++ (0 until num_grids * num_grids - EQs0.length).map((i: Int) => EQ("DEQ" + i, 0.0, List()))
-  println("read "+EQs.size+" EQs")
   val TSs: List[TS] = readTS()
-  println("read "+TSs.size+" TSs")
   val DCs: List[DC] = readDC()
-  println("read "+DCs.size+" DCs")
   val gap: Point = Point(1.0 / num_grids.toDouble, 1.0 / num_grids.toDouble)
   val shuffledEQs: List[EQ] = EQs.map((_, Random.nextDouble())).sortBy(_._2).map(_._1)
   for (index <- shuffledEQs.indices) {
@@ -233,7 +230,6 @@ class GRRMImporter(dirname: File, comfilename: String) {
         best_eq.position = p1
         val postScore = TSs.map(_.dist_between_eqs).sum
         if (postScore  < preScore) {
-          println("pre: "+preScore+" post: "+postScore)
           true
         } else {
           position = p1
@@ -443,8 +439,6 @@ class GRRMImporter(dirname: File, comfilename: String) {
       read(ts)
   }
 
-  def voidErr(in: InputStream): Unit = {
-    println(Source.fromInputStream(in).mkString)
-  }
+  def voidErr(in: InputStream): Unit = ()
 
 }
