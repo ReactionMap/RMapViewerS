@@ -43,10 +43,14 @@ class MoleculeList extends ScrollPane {
 
 
   def clear():Unit = {
-    update(List())
+    setList(List())
   }
 
-  def update(vertices: List[Vertex]):Unit = {
+  def selectedVertices():List[Vertex] = {
+    listView.selection.indices.toList.sorted.map(listVertices(_))
+  }
+
+  def setList(vertices: List[Vertex]):Unit = {
     listVertices = vertices
     listView.listData = vertices.map((vertex: Vertex) => {
       val image = new BufferedImage(width - 30, 64, BufferedImage.TYPE_INT_BGR)

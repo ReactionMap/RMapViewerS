@@ -19,11 +19,6 @@ object ScratchingBrowser extends Frame {
     }
   }
   val moleculeList = new MoleculeList() {
-    listenTo(selection)
-    reactions += {
-      case ListSelectionChanged(source, range, live) =>
-        rmap.setSelections(source.selection.indices.toList.map(listVertices(_)))
-    }
     listenTo(listView.mouse.clicks)
     reactions += {
       case e: MouseClicked =>
@@ -54,18 +49,29 @@ object ScratchingBrowser extends Frame {
         }
       }
       contents += moleculeList
+      contents += new Button("OK") {
+        listenTo(mouse.clicks)
+        reactions += {
+          case e:MouseClicked => {
+            RMapViewer.rmap.setSelections(moleculeList.selectedVertices
+              diff RMapViewer.rmap.reactants.toList
+              diff RMapViewer.rmap.products.toList)
+            close
+          }
+        }
+      }
     }
   }
 
   def updateMoleculeList():Unit = {
     val command = moleculeSketch.generateMatchingCommands(RMapViewer.rmap.vertices.head.geometry.map(_.head.asInstanceOf[String]))
     if (sortByEnergyCheckBox.selected) {
-      moleculeList.update(RMapViewer.rmap.vertices.toList
+      moleculeList.setList(RMapViewer.rmap.vertices.toList
         .filter((vertex:Vertex)=>moleculeSketch.matches(command, vertex.geometry, vertex.bonds))
         .sortWith { case (less: Vertex, more: Vertex) => less.energy <= more.energy })
     } else {
       val geometrySignature = moleculeSketch.geometrySignature
-      moleculeList.update(RMapViewer.rmap.vertices.toList
+      moleculeList.setList(RMapViewer.rmap.vertices.toList
         .filter((vertex:Vertex)=>moleculeSketch.matches(command, vertex.geometry, vertex.bonds))
         .map((vertex: Vertex) => (vertex, geometrySignature.dist(vertex.geometrySignature)))
         .sortWith { case (less: (Vertex, Double), more: (Vertex, Double)) => less._2 <= more._2 }

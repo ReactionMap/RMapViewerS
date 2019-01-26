@@ -111,45 +111,27 @@ class ReactionMap() {
     selections contains vertex
   }
 
-  /*
-  def addSelectionsToReactants():Unit = {
-    reactants ++= selections
-    setSelections(List())
-  }
-
-  def addSelectionsToProducts():Unit = {
-    products ++= selections
-    setSelections(List())
-  }
-  */
-
-  def moveSelectionsToReactants(vertices: List[Vertex]):Unit = {
+  def moveToReactant(vertices: List[Vertex]):Unit = {
     reactants ++= vertices
     products --= vertices
     selections --= vertices
     changed(GraphAspect.SELECTION)
   }
 
-  def moveSelectionsToProducts(vertices: List[Vertex]):Unit = {
+  def moveToProduct(vertices: List[Vertex]):Unit = {
     reactants --= vertices
     products ++= vertices
     selections --= vertices
     changed(GraphAspect.SELECTION)
   }
 
-  def moveReactantsToSelections(vertices: List[Vertex]):Unit = {
+  def moveToSelection(vertices: List[Vertex]):Unit = {
     reactants --= vertices
     products --= vertices
     selections ++= vertices
     changed(GraphAspect.SELECTION)
   }
 
-  def moveProductsToSelections(vertices: List[Vertex]):Unit = {
-    reactants --= vertices
-    products --= vertices
-    selections ++= vertices
-    changed(GraphAspect.SELECTION)
-  }
 
   def unselect(vertex: Vertex):Unit = {
     reactants -= vertex
@@ -175,28 +157,28 @@ class ReactionMap() {
 
   def searchLabel():Unit = {
     Dialog.showInput[String](null, "Search Label: ", "RMapViewer", initial = "") match {
-      case Some(query) => setSelections(vertices.filter(_.label == query))
+      case Some(query) => setSelections(vertices.filter(_.label == query) diff reactants.toList diff products.toList)
       case  None => ()
     }
   }
 
   def searchSmiles():Unit = {
     Dialog.showInput[String](null, "Search SMILES: ", "RMapViewer", initial = "") match {
-      case Some(query) => setSelections(vertices.filter(_.smiles.contains(query)))
+      case Some(query) => setSelections(vertices.filter(_.smiles.contains(query)) diff reactants.toList diff products.toList)
       case  None => ()
     }
   }
 
   def searchInchi():Unit = {
     Dialog.showInput[String](null, "Search InChI: ", "RMapViewer", initial = "") match {
-      case Some(query) => setSelections(vertices.filter(_.inchi.contains(query)))
+      case Some(query) => setSelections(vertices.filter(_.inchi.contains(query)) diff reactants.toList diff products.toList)
       case  None => ()
     }
   }
 
   def searchCanost():Unit = {
     Dialog.showInput[String](null, "Search CAST-1D: ", "RMapViewer", initial = "") match {
-      case Some(query) => setSelections(vertices.filter(_.canost.contains(query)))
+      case Some(query) => setSelections(vertices.filter(_.canost.contains(query)) diff reactants.toList diff products.toList)
       case  None => ()
     }
   }
@@ -240,10 +222,10 @@ class ReactionMap() {
     val dirname: String = file_dialog.getDirectory
     if (filename != null && dirname != null)
       try {
-        readFrom(new File(dirname + "/" + filename))
+        readFrom(new File(dirname + filename))
       } catch {
-        case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = "Can not read " + dirname + "/" + filename)
-        case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error when reading " + dirname + "/" + filename)
+        case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = "Can not read " + dirname + filename)
+        case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error when reading " + dirname + filename + "\n" + e)
       }
   }
 
