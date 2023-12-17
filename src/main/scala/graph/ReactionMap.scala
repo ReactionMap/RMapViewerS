@@ -5,8 +5,8 @@ package graph
   */
 
 import java.io._
-
 import application.{RMapClient, ScratchingBrowser}
+import importer.{GRRMDigestImporter, GRRMFullImporter, TrajectoryImporter}
 import org.json4s._
 import org.json4s.jackson.{JsonMethods, Serialization}
 
@@ -263,7 +263,7 @@ class ReactionMap() {
     if (filename != null && dirname != null)
       if (filename.endsWith(".com")) {
         try {
-          readFrom(new GRRMFullImporter(new File(dirname), filename).toJSON)
+          readFrom(new GRRMFullImporter(new File(dirname+"/"+filename)).toJSON)
         } catch {
           case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = e.getMessage())
           case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error while importing:\n"+e.getMessage())
@@ -281,7 +281,7 @@ class ReactionMap() {
     if (filename != null && dirname != null)
       if (filename.endsWith(".com")) {
         try {
-          readFrom(new GRRMDigestImporter(new File(dirname), filename).toJSON)
+          readFrom(new GRRMDigestImporter(new File(dirname+"/"+filename)).toJSON)
         } catch {
           case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = e.getMessage())
           case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error while importing:\n"+e.getMessage())
@@ -299,7 +299,7 @@ class ReactionMap() {
     if (filename != null && dirname != null)
       if (filename.endsWith("_list.xyz")) {
         try {
-          readFrom(new TrajectoryImporter(new File(dirname), filename).toJSON)
+          readFrom(new TrajectoryImporter(new File(dirname+"/"+filename)).toJSON)
         } catch {
           case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = e.getMessage())
           case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error while importing:\n"+e.getMessage())

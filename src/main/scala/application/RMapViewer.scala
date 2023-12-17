@@ -56,6 +56,12 @@ object RMapViewer extends SimpleSwingApplication {
             }
           }
         }
+        contents += new Separator()
+        contents += new MenuItem(new Action("Open watcher...") {
+          def apply: Unit = {
+            RMapWatcher.open()
+          }
+        })
       }
       contents += new Menu("Edit") {
         contents += new MenuItem("Unselect all") {

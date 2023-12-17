@@ -1,13 +1,12 @@
-package graph
+package importer
 
-import java.io.{File, FileNotFoundException}
+import java.io.File
 import scala.io.Source
-import scala.swing.Dialog
 
-class TrajectoryImporter(dirname: File, comfilename: String)
-  extends ReactionMapImporter(dirname: File, false) {
+class TrajectoryImporter(xyzFile: File)
+  extends ReactionMapImporter(xyzFile: File, false) {
 
-  def findPrefix():String = dirname + "/" + comfilename.subSequence(0, comfilename.length - 12)
+  def findPrefix():String = xyzFile.getPath.substring(0, xyzFile.getPath.length - 12)
   def readGRRM():String = {
     ""
 //    try {

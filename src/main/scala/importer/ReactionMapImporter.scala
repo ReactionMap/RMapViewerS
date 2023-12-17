@@ -1,18 +1,17 @@
-package graph
-
-import java.io.{InputStream, OutputStream, File}
+package importer
 
 import geometry.Point
 
+import java.io.{File, InputStream, OutputStream}
 import scala.io.Source
+import scala.sys.process._
 import scala.util.Random
-import sys.process._
 
 /**
   * Created by tomohiro on 2016/02/29.
   */
 
-abstract class ReactionMapImporter(dirname: File, needsMultiframe:Boolean)
+abstract class ReactionMapImporter(file: File, needsMultiframe:Boolean)
 {
   val prefix: String = findPrefix()
   val grrm: String = readGRRM()

@@ -1,16 +1,11 @@
-package graph
+package importer
 
-import java.io.{InputStream, OutputStream, File}
-
-import geometry.Point
-
+import java.io.File
 import scala.io.Source
-import scala.util.Random
-import sys.process._
 
-class GRRMImporter(dirname: File, comfilename: String, needsMultiframe: Boolean) extends ReactionMapImporter(dirname: File, needsMultiframe: Boolean) {
+class GRRMImporter(comfile: File, needsMultiframe: Boolean) extends ReactionMapImporter(comfile: File, needsMultiframe: Boolean) {
 
-  def findPrefix():String = dirname + "/" + comfilename.subSequence(0, comfilename.length - 4)
+  def findPrefix():String = comfile.getPath.substring(0, comfile.getPath.length - 4)
   def readGRRM():String = Source.fromFile(prefix + ".com").mkString
 
   def readEQ(): List[EQ] = {
