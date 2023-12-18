@@ -20,7 +20,6 @@ class TrajectoryImporter(xyzFile: File)
     var eqs: List[EQ] = List()
     val filename = prefix + "_EQ_list.xyz"
     val lines: Iterator[String] = Source.fromFile(filename).getLines()
-    println("prifix: "+prefix)
     while (lines.hasNext) {
       val numLines: Int = lines.next().trim.toInt
       val comments: Array[String] = lines.next().split(',')

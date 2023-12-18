@@ -2,7 +2,7 @@ package importer
 
 import geometry.Point
 
-import java.io.{File, InputStream, OutputStream}
+import java.io.{File, InputStream, OutputStream, PrintWriter}
 import scala.io.Source
 import scala.sys.process._
 import scala.util.Random
@@ -60,6 +60,7 @@ abstract class ReactionMapImporter(file: File, needsMultiframe:Boolean)
     }
   }
   abstract class Node(label: String, energy: Double, geometry: List[List[Any]]) {
+    val _label:String = label
     var position: Point = Point(-1.0, -1.0)
 
     def origin: Point
@@ -222,35 +223,36 @@ abstract class ReactionMapImporter(file: File, needsMultiframe:Boolean)
   }
 
   def readBonds(): Unit = {
-    val babel = Process("obabel -i xyz - -o mol") // sd
-    val babel_io = new ProcessIO(
-        allXYZs: ((OutputStream) => Unit),
-        collectBonds: ((InputStream) => Unit),
-        voidErr: ((InputStream) => Unit))
+    val xyz:File = File.createTempFile("rmapviewer-", ".xyz")
+    xyz.deleteOnExit()
+    allXYZs(new PrintWriter(xyz))
+    val babel_io = BasicIO.standard(false).withError(voidErr).withOutput(collectBonds)
+    val babel = Process("obabel -i xyz "+xyz.toPath+" -o mol") // sd
     (babel run babel_io).exitValue
+    xyz.delete()
   }
 
   def readSmiles(): Unit = {
-    val babel = Process("obabel -i xyz - -o can")
-    val babel_io = new ProcessIO(
-      allXYZs: ((OutputStream) => Unit),
-      collectSmiles: ((InputStream) => Unit),
-      voidErr: ((InputStream) => Unit))
+    val xyz:File = File.createTempFile("rmapviewer-", ".xyz")
+    xyz.deleteOnExit()
+    allXYZs(new PrintWriter(xyz))
+    val babel_io = BasicIO.standard(false).withError(voidErr).withOutput(collectSmiles)
+    val babel = Process("obabel -i xyz "+xyz.toPath+" -o can")
     (babel run babel_io).exitValue
   }
 
   def readInchi(): Unit = {
-    val babel = Process("obabel -i xyz - -o inchi")
-    val babel_io = new ProcessIO(
-      allXYZs: ((OutputStream) => Unit),
-      collectInchi: ((InputStream) => Unit),
-      voidErr: ((InputStream) => Unit))
+    val xyz:File = File.createTempFile("rmapviewer-", ".xyz")
+    xyz.deleteOnExit()
+    allXYZs(new PrintWriter(xyz))
+    val babel_io = BasicIO.standard(false).withError(voidErr).withOutput(collectInchi)
+    val babel = Process("obabel -i xyz "+xyz.toPath+" -o inchi")
     (babel run babel_io).exitValue
   }
 
   def readCanost(): Unit = {
     for (node: Node <- (EQs ++ DCs ++ TSs)) {
-      val canost = Process("./main_canost -u f /dev/stdin /dev/stdout")
+      val canost = Process("main_canost -u f /dev/stdin /dev/stdout")
       val canost_io = new ProcessIO(
         (stream: OutputStream) => {
           stream.write(node.sdf.getBytes())
@@ -271,14 +273,14 @@ abstract class ReactionMapImporter(file: File, needsMultiframe:Boolean)
     }
   }
 
-  def allXYZs(out: OutputStream): Unit = {
+  def allXYZs(out: PrintWriter): Unit = {
     def write(geometry: List[List[Any]]): Unit = {
-      out.write(("" + (geometry.length) + "\n\n" +
+      out.write("" + (geometry.length) + "\n\n" +
         geometry.map((atom: List[Any]) =>
           atom(0).asInstanceOf[String] + " " +
             atom(1).asInstanceOf[Double] + " " +
             atom(2).asInstanceOf[Double] + " " +
-            atom(3).asInstanceOf[Double]).mkString("\n") + "\n").getBytes)
+            atom(3).asInstanceOf[Double]).mkString("\n") + "\n")
     }
     for (eq: EQ <- EQs)
       write(eq.geometry)
