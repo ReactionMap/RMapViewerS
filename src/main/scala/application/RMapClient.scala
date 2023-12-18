@@ -10,7 +10,7 @@ import scala.swing._
 import scala.swing.event.{ButtonClicked, ListSelectionChanged}
 
 object RMapClient extends Frame {
-    override val title = "RMapClient"
+  override val title = "RMapClient"
   var rmaps:List[Map[String,Any]] = List()
   val serverURLField = new TextField("http://localhost:1701/", 15)
   val nameField = new TextField(15)

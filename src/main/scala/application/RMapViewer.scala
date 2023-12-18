@@ -16,13 +16,31 @@ object RMapViewer extends SimpleSwingApplication {
     title = "RMapViewer"
     menuBar = new MenuBar() {
       contents += new Menu("File") {
-        contents += new MenuItem("Open...") {
-          action = new Action("Open...") {
+        contents += new MenuItem(new Action("Open rmap file...") {
             def apply:Unit = {
               rmap.openRmapFile()
             }
           }
+        )
+        contents += new MenuItem(new Action("Open GRRM directory...") {
+            def apply:Unit = {
+              rmap.importFromGRRMFull()
+            }
+          }
+        )
+        contents += new MenuItem(new Action("Open digest GRRM directory...") {
+          def apply:Unit = {
+            rmap.importFromGRRMDigest()
+          }
         }
+        )
+        contents += new MenuItem(new Action("Open trajectory directory...") {
+          def apply:Unit = {
+            rmap.importFromTrajectory()
+          }
+        }
+        )
+        contents += new Separator()
         contents += new MenuItem("Save...") {
           action = new Action("Save...") {
             def apply:Unit = {
@@ -39,13 +57,11 @@ object RMapViewer extends SimpleSwingApplication {
           }
         }
         contents += new Separator()
-        contents += new MenuItem("Import...") {
-          action = new Action("Import...") {
-            def apply:Unit = {
-              rmap.importFromGRRM()
-            }
+        contents += new MenuItem(new Action("Open watcher...") {
+          def apply: Unit = {
+            RMapWatcher.open()
           }
-        }
+        })
       }
       contents += new Menu("Edit") {
         contents += new MenuItem("Unselect all") {

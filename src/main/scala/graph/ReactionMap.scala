@@ -5,8 +5,8 @@ package graph
   */
 
 import java.io._
-
 import application.{RMapClient, ScratchingBrowser}
+import importer.{GRRMDigestImporter, GRRMFullImporter, TrajectoryImporter}
 import org.json4s._
 import org.json4s.jackson.{JsonMethods, Serialization}
 
@@ -254,11 +254,7 @@ class ReactionMap() {
       writeTo(new File(dirname + "/" + filename))
   }
 
-  def importFrom(dirname: File, comfile: String): Unit = {
-    readFrom(new GRRMImporter(dirname, comfile).toJSON)
-  }
-
-  def importFromGRRM():Unit = {
+  def importFromGRRMFull():Unit = {
     import java.awt.FileDialog
     val file_dialog: FileDialog = new FileDialog(null: javax.swing.JFrame, "Select a .com file", FileDialog.LOAD)
     file_dialog.setVisible(true)
@@ -267,13 +263,49 @@ class ReactionMap() {
     if (filename != null && dirname != null)
       if (filename.endsWith(".com")) {
         try {
-          importFrom(new File(dirname), filename)
+          readFrom(new GRRMFullImporter(new File(dirname+"/"+filename)).toJSON)
         } catch {
           case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = e.getMessage())
           case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error while importing:\n"+e.getMessage())
         }
       } else {
         Dialog.showMessage(title = "RMapViewer", message = "Please select a .com file.")
+      }
+  }
+  def importFromGRRMDigest():Unit = {
+    import java.awt.FileDialog
+    val file_dialog: FileDialog = new FileDialog(null: javax.swing.JFrame, "Select a .com file", FileDialog.LOAD)
+    file_dialog.setVisible(true)
+    val filename: String = file_dialog.getFile
+    val dirname: String = file_dialog.getDirectory
+    if (filename != null && dirname != null)
+      if (filename.endsWith(".com")) {
+        try {
+          readFrom(new GRRMDigestImporter(new File(dirname+"/"+filename)).toJSON)
+        } catch {
+          case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = e.getMessage())
+          case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error while importing:\n"+e.getMessage())
+        }
+      } else {
+        Dialog.showMessage(title = "RMapViewer", message = "Please select a .com file.")
+      }
+  }
+  def importFromTrajectory():Unit = {
+    import java.awt.FileDialog
+    val file_dialog: FileDialog = new FileDialog(null: javax.swing.JFrame, "Select a .xyz file", FileDialog.LOAD)
+    file_dialog.setVisible(true)
+    val filename: String = file_dialog.getFile
+    val dirname: String = file_dialog.getDirectory
+    if (filename != null && dirname != null)
+      if (filename.endsWith("_list.xyz")) {
+        try {
+          readFrom(new TrajectoryImporter(new File(dirname+"/"+filename)).toJSON)
+        } catch {
+          case e: FileNotFoundException => Dialog.showMessage(title = "RMapViewer", message = e.getMessage())
+          case e: Exception => Dialog.showMessage(title = "RMapViewer", message = "Error while importing:\n"+e.getMessage())
+        }
+      } else {
+        Dialog.showMessage(title = "RMapViewer", message = "Please select a .xyz file.")
       }
   }
 }
